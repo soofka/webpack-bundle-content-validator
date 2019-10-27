@@ -1,7 +1,7 @@
 # Webpack Bundle Content Validator
 Webpack plugin and CLI tool for Webpack bundle content validation.
 
-- ✔️ validate if your Webpack bundle contains mandatory dependencies and does not contain disallowed ones
+- ✔️ check if your Webpack bundle contains mandatory dependencies and doesn't contain disallowed ones
 - ⚠️ print warning in console or fail whole build process when validation is not successful
 - 🤖 use as Webpack plugin or CLI tool
 
