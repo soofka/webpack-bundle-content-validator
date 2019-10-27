@@ -19,7 +19,7 @@
   "scripts": {
     "build": "rimraf ./lib && cpx ./src/*.js ./lib",
     "test": "jest --config ./jestconfig.json",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run test && npm run build"
   },
   "devDependencies": {
     "cpx": "^1.5.0",
