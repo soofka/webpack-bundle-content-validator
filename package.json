@@ -1,6 +1,6 @@
 {
   "name": "webpack-bundle-content-validator",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Webpack plugin and CLI tool for Webpack bundle content validation",
   "keywords": [
     "webpack",
@@ -17,12 +17,12 @@
     "lib"
   ],
   "scripts": {
-    "build": "rimraf ./lib && cpx ./src/*.js ./lib",
+    "build": "rimraf ./lib && cpy ./src/*.js ./lib",
     "test": "jest --config ./jestconfig.json",
     "prepublishOnly": "npm run test && npm run build"
   },
   "devDependencies": {
-    "cpx": "^1.5.0",
+    "cpy-cli": "^2.0.0",
     "jest": "^24.9.0",
     "rimraf": "^3.0.0"
   }
