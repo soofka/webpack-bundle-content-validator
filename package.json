@@ -1,0 +1,29 @@
+{
+  "name": "webpack-bundle-content-validator",
+  "version": "0.1.0",
+  "description": "Webpack plugin and CLI tool for Webpack bundle content validation",
+  "keywords": [
+    "webpack",
+    "webpack plugin",
+    "cli",
+    "dependencies",
+    "dependencies validation",
+    "bundle content",
+    "bundle content validation"
+  ],
+  "author": "Jakub Sowiński <pansoofka@gmail.com> (https://soofka.pl)",
+  "license": "MIT",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "rimraf ./lib && cpx ./src/*.js ./lib",
+    "test": "jest --config ./jestconfig.json",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "cpx": "^1.5.0",
+    "jest": "^24.9.0",
+    "rimraf": "^3.0.0"
+  }
+}
