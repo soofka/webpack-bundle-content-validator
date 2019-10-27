@@ -11,16 +11,16 @@ Webpack plugin and CLI tool for Webpack bundle content validation.
 We're using internal package of vendor dependencies in my project. We wanted to ensure that none of dependencie provided by vendor ends up in bundles representing our applications. Therefore, I wrote this tool to validate content of Webpack bundle against list of mandatory and disallowed dependencies, and open sourced it.
 
 ## Usage
-You can download this project from GitHub and build it yourself (built project will be placed in `lib` directory):
-
-```shell
-npm run build
-```
-
-Or you can download it as a [package from NPM](https://www.npmjs.com/package/webpack-bundle-content-validator):
+You can download this project as a [package from NPM](https://www.npmjs.com/package/webpack-bundle-content-validator):
 
 ```shell
 npm install --save-dev webpack-bundle-content-validator
+```
+
+You can also download this project as a [source code from GitHub](https://github.com/soofka/webpack-bundle-content-validator) and build it yourself (compiled project will be placed in `lib` directory):
+
+```shell
+npm run build
 ```
 
 ### As Webpack plugin
