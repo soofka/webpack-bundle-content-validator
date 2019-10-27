@@ -17,7 +17,7 @@ You can download this project from GitHub and build it yourself (built project w
 npm run build
 ```
 
-Or you can download it as a package from NPM:
+Or you can download it as a [package from NPM](https://www.npmjs.com/package/webpack-bundle-content-validator):
 
 ```shell
 npm install --save-dev webpack-bundle-content-validator
