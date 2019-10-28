@@ -13,7 +13,9 @@ const {
 } = require('./utils');
 
 const validate = require('./validator');
+
 const fs = require('fs');
+const path = require('path');
 
 const main = () => {
   const args = process.argv.splice(2);
@@ -53,7 +55,7 @@ const parseArgs = (args, defaultArgs) => {
     switch (key) {
       case '-s':
       case '--stats':
-        parsedArgs.statsFilePath = `${__dirname}/${value}`;
+        parsedArgs.statsFilePath = path.resolve(__dirname, value);
         break;
 
       case '-m':
@@ -107,7 +109,12 @@ const validateStats = (stats) => {
   return statsJson;
 };
 
-const parseStats = (stats) => stats.modules.map(module => normalizeString(module.name));
+const parseStats = (stats) =>
+  stats.modules
+    ? stats.modules
+      .filter(module => module.name)
+      .map(module => normalizeString(module.name))
+    : [];
 
 const validateDependencies = (mandatoryDependencies, disallowedDependencies) => {
   const duplicatedDependencies = findDuplicatesInArrays(

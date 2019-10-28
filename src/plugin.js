@@ -74,6 +74,11 @@ const validateOptions = (options) => {
   };
 };
 
-const parseStats = (stats) => stats.compilation.modules.map(module => normalizeString(module.resource));
+const parseStats = (stats) =>
+  stats.compilation && stats.compilation.modules
+    ? stats.compilation.modules
+      .filter(module => module.resource)
+      .map(module => normalizeString(module.resource))
+    : [];
 
 module.exports = WebpackBundleContentValidatorPlugin;

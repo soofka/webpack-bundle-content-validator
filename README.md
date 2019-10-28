@@ -29,13 +29,13 @@ npm run build
 In order to use it as Webpack plugin, import it in your Webpack configuration, and add it to `plugins` section of Webpack's configuration file.
 
 ```js
-const WebpackBundleContentAnalyzerPlugin = require('webpack-bundle-content-analyzer/lib/plugin');
+const WebpackBundleContentValidatorPlugin = require('webpack-bundle-content-validator/lib/plugin');
 
 module.exports = {
   // rest of your configuration
   plugins: [
     // rest of your plugins
-    new WebpackBundleContentAnalyzerPlugin(/* options */),
+    new WebpackBundleContentValidatorPlugin(/* options */),
   ]
 }
 ```
@@ -49,13 +49,13 @@ module.exports = {
 
 #### Example
 ```js
-const WebpackBundleContentAnalyzerPlugin = require('webpack-bundle-content-analyzer/lib/plugin');
+const WebpackBundleContentValidatorPlugin = require('webpack-bundle-content-validator/lib/plugin');
 
 module.exports = {
   // rest of your configuration
   plugins: [
     // rest of your plugins
-    new WebpackBundleContentAnalyzerPlugin({
+    new WebpackBundleContentValidatorPlugin({
       mandatoryDependencies: ['preact'],
       disallowedDependencies: ['react', 'react-dom'],
       failOnInvalid: true,
@@ -95,3 +95,4 @@ node ./node_modules/webpack-bundle-content-validator/lib/cli.js -s ./stats.json
 * add end to end testing
 * add silent mode
 * add CI/CD with Travis
+* install CLI tool globally and make it run with npx

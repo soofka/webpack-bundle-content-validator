@@ -26,7 +26,7 @@ const findDuplicatesInArrays = (array1, array2) => {
   return duplicates;
 };
 
-const normalizeString = (string) => encodeURI(string.replace(/\//g, '\\'));
+const normalizeString = (string) => typeof string === 'string' ? encodeURI(string.replace(/\//g, '\\')) : '';
 
 module.exports = {
   logMessage,
