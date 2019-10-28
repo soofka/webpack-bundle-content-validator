@@ -5,6 +5,8 @@ Webpack plugin and CLI tool for Webpack bundle content validation.
 - ⚠️ print warning in console or fail whole build process when validation is not successful
 - 🤖 use as Webpack plugin or CLI tool
 
+**This plugin/tool is compatible with Webpack 4.** Compatibility with older versions of Webpack was not tested yet, but there might be some issues with that due to the fact that structure of [Webpack Stats object](https://webpack.js.org/api/stats/) was changed in Webpack 4.
+
 *Note*: This is early version of this project. Feedback and suggestions are appreciated!
 
 ## Background
