@@ -96,3 +96,4 @@ node ./node_modules/webpack-bundle-content-validator/lib/cli.js -s ./stats.json
 * add silent mode
 * add CI/CD with Travis
 * install CLI tool globally and make it run with npx
+* add https://github.com/conventional-changelog/standard-version or https://github.com/semantic-release/semantic-release
