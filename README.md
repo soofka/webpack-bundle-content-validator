@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/soofka/webpack-bundle-content-validator.svg?branch=master)](https://travis-ci.org/soofka/webpack-bundle-content-validator)
+[![Coverage Status](https://coveralls.io/repos/soofka/webpack-bundle-content-validator/badge.svg?branch=master)](https://coveralls.io/r/soofka/webpack-bundle-content-validator?branch=master)
+[![NPM version](https://img.shields.io/npm/v/webpack-bundle-content-validator.svg)](https://www.npmjs.com/package/webpack-bundle-content-validator)
+
 # Webpack Bundle Content Validator
 Webpack plugin and CLI tool for Webpack bundle content validation.
 
