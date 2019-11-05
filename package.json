@@ -19,9 +19,11 @@
   "scripts": {
     "build": "rimraf ./lib && cpy ./src/*.js ./lib",
     "test": "jest --config ./jestconfig.json",
+    "test:coverage": "npm run test -- --coverage | coveralls",
     "prepublishOnly": "npm run test && npm run build"
   },
   "devDependencies": {
+    "coveralls": "^3.0.7",
     "cpy-cli": "^2.0.0",
     "jest": "^24.9.0",
     "rimraf": "^3.0.0"
