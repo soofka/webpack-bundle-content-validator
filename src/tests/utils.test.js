@@ -5,8 +5,8 @@ const {
   logWarning,
   logErrorAndExit,
   deduplicateArray,
-  concatenateArray,
   findDuplicatesInArrays,
+  normalizeString,
 } = require('../utils');
 
 describe('utils.js', () => {
@@ -48,11 +48,11 @@ describe('utils.js', () => {
     it('logErrorAndExit logs standard "process finished with failure" message and error message to console and exits with status code 1', () => {
       logErrorAndExit(mockMessage);
 
-      expect(console.log).toBeCalledTimes(1);
-      expect(console.log).toBeCalledWith(MESSAGES.processingFinishedWithFailure());
-
       expect(console.error).toBeCalledTimes(1);
       expect(console.error).toBeCalledWith(`ERROR: ${mockMessage}`);
+
+      expect(console.log).toBeCalledTimes(1);
+      expect(console.log).toBeCalledWith(MESSAGES.processingFinished(false));
 
       expect(process.exit).toBeCalledTimes(1);
       expect(process.exit).toBeCalledWith(1);
@@ -62,91 +62,99 @@ describe('utils.js', () => {
 
   describe('array manipulators', () => {
 
-    it('deduplicateArray returns empty array if provided with empty array', () => {
-      expect(deduplicateArray([])).toEqual([]);
+    describe('deduplicateArray', () => {
+
+      it('returns empty array if provided with empty array', () => {
+        expect(deduplicateArray([])).toEqual([]);
+      });
+
+      it('returns identical array if no duplicates found', () => {
+        const array = ['a', 'b', 'c'];
+
+        expect(deduplicateArray(array)).toEqual(array);
+      });
+
+      it('returns array with 1 duplicate removed', () => {
+        const array = ['a', 'a', 'b', 'c'];
+        const deduplicatedArray = ['a', 'b', 'c'];
+
+        expect(deduplicateArray(array)).toEqual(deduplicatedArray);
+      });
+
+      it('returns array with 2 identical duplicates removed', () => {
+        const array = ['a', 'b', 'b', 'b', 'c'];
+        const deduplicatedArray = ['a', 'b', 'c'];
+
+        expect(deduplicateArray(array)).toEqual(deduplicatedArray);
+      });
+
+      it('returns array with 2 different duplicates removed', () => {
+        const array = ['a', 'b', 'b', 'c', 'c'];
+        const deduplicatedArray = ['a', 'b', 'c'];
+
+        expect(deduplicateArray(array)).toEqual(deduplicatedArray);
+      });
+
     });
 
-    it('deduplicateArray returns identical array if no duplicates found', () => {
-      const array = ['a', 'b', 'c'];
+    describe('findDuplicatesInArrays', () => {
 
-      expect(deduplicateArray(array)).toEqual(array);
+      it('does not find duplicates when both arrays are empty', () => {
+        expect(findDuplicatesInArrays([], [])).toEqual([]);
+      });
+
+      it('does not find duplicates when first array is empty', () => {
+        expect(findDuplicatesInArrays(['a', 'b', 'c'], [])).toEqual([]);
+      });
+
+      it('does not find duplicates when second array is empty', () => {
+        expect(findDuplicatesInArrays([], ['d', 'e', 'f'])).toEqual([]);
+      });
+
+      it('does not find duplicates when both arrays have unique values', () => {
+        expect(findDuplicatesInArrays(['a', 'b', 'c'], ['d', 'e', 'f'])).toEqual([]);
+      });
+
+      it('does find duplicate if there is 1', () => {
+        expect(findDuplicatesInArrays(['a', 'b', 'c'], ['a', 'e', 'f'])).toEqual(['a']);
+      });
+
+      it('does find duplicates when there are 2', () => {
+        expect(findDuplicatesInArrays(['a', 'b', 'c'], ['d', 'b', 'c'])).toEqual(['b', 'c']);
+      });
+
+      it('does find all duplicates if arrays are identical', () => {
+        expect(findDuplicatesInArrays(['a', 'b', 'c'], ['a', 'b', 'c'])).toEqual(['a', 'b', 'c']);
+      });
+
     });
 
-    it('deduplicateArray returns array with 1 duplicate removed', () => {
-      const array = ['a', 'a', 'b', 'c'];
-      const deduplicatedArray = ['a', 'b', 'c'];
+  });
 
-      expect(deduplicateArray(array)).toEqual(deduplicatedArray);
-    });
+  describe('string manipulators', () => {
 
-    it('deduplicateArray returns array with 2 identical duplicates removed', () => {
-      const array = ['a', 'b', 'b', 'b', 'c'];
-      const deduplicatedArray = ['a', 'b', 'c'];
+    describe('normalizeString', () => {
 
-      expect(deduplicateArray(array)).toEqual(deduplicatedArray);
-    });
+      it('returns empty string if no parameter is provided', () => {
+        expect(normalizeString()).toEqual('');
+      });
 
-    it('deduplicateArray returns array with 2 different duplicates removed', () => {
-      const array = ['a', 'b', 'b', 'c', 'c'];
-      const deduplicatedArray = ['a', 'b', 'c'];
+      it('returns empty string if parameter is not of type string', () => {
+        expect(normalizeString(0)).toEqual('');
+      });
 
-      expect(deduplicateArray(array)).toEqual(deduplicatedArray);
-    });
+      it('returns the same string if parameter does not contain slashes', () => {
+        expect(normalizeString('test')).toEqual('test');
+      });
 
-    it('concatenateArray returns empty string when provided with empty array', () => {
-      expect(concatenateArray([])).toEqual('');
-    });
+      it('replaces one slash with backslash', () => {
+        expect(normalizeString('t/est')).toEqual(encodeURI('t\\est'));
+      });
 
-    it('concatenateArray returns string containing concatenated array elements', () => {
-      const array = ['a', 'b', 'c'];
-      const concatenatedArray = ',a,b,c';
+      it('replaces multiple slashes with backslashes', () => {
+        expect(normalizeString('t/es/t')).toEqual(encodeURI('t\\es\\t'));
+      });
 
-      expect(concatenateArray(array)).toEqual(concatenatedArray);
-    });
-
-    it('concatenateArray returns string containing concatenated array elements with custom delimiter', () => {
-      const array = ['a', 'b', 'c'];
-      const delimiter = '-';
-      const concatenatedArray = '-a-b-c';
-
-      expect(concatenateArray(array, delimiter)).toEqual(concatenatedArray);
-    });
-
-    it('concatenateArray returns string containing concatenated array elements with custom delimiter and initial value', () => {
-      const array = ['a', 'b', 'c'];
-      const delimiter = '+';
-      const initialValue = 'xyz';
-      const concatenatedArray = 'xyz+a+b+c';
-
-      expect(concatenateArray(array, delimiter, initialValue)).toEqual(concatenatedArray);
-    });
-
-    it('does not find duplicates when both arrays are empty', () => {
-      expect(findDuplicatesInArrays([], [])).toEqual([]);
-    });
-
-    it('does not find duplicates when first array is empty', () => {
-      expect(findDuplicatesInArrays(['a', 'b', 'c'], [])).toEqual([]);
-    });
-
-    it('does not find duplicates when second array is empty', () => {
-      expect(findDuplicatesInArrays([], ['d', 'e', 'f'])).toEqual([]);
-    });
-
-    it('does not find duplicates when both arrays have unique values', () => {
-      expect(findDuplicatesInArrays(['a', 'b', 'c'], ['d', 'e', 'f'])).toEqual([]);
-    });
-
-    it('does find duplicate if there is 1', () => {
-      expect(findDuplicatesInArrays(['a', 'b', 'c'], ['a', 'e', 'f'])).toEqual(['a']);
-    });
-
-    it('does find duplicates when there are 2', () => {
-      expect(findDuplicatesInArrays(['a', 'b', 'c'], ['d', 'b', 'c'])).toEqual(['b', 'c']);
-    });
-
-    it('does find all duplicates if arrays are identical', () => {
-      expect(findDuplicatesInArrays(['a', 'b', 'c'], ['a', 'b', 'c'])).toEqual(['a', 'b', 'c']);
     });
 
   });

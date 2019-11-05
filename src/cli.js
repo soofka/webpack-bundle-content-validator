@@ -5,7 +5,6 @@ const {
 } = require('./constants');
 
 const {
-  logMessage,
   logErrorAndExit,
   deduplicateArray,
   findDuplicatesInArrays,
@@ -19,9 +18,6 @@ const path = require('path');
 
 const main = () => {
   const args = process.argv.splice(2);
-
-  logMessage(MESSAGES.cliStarted(args));
-
   const parsedArgs = parseArgs(
     args,
     {
@@ -30,7 +26,7 @@ const main = () => {
     },
   );
 
-  const stats = validateStats(parsedArgs.statsFilePath);
+  const stats = validateStats(path.resolve(__dirname, parsedArgs.statsFilePath));
   const dependenciesPaths = parseStats(stats);
 
   validateDependencies(
@@ -55,7 +51,7 @@ const parseArgs = (args, defaultArgs) => {
     switch (key) {
       case '-s':
       case '--stats':
-        parsedArgs.statsFilePath = path.resolve(__dirname, value);
+        parsedArgs.statsFilePath = value;
         break;
 
       case '-m':
@@ -127,4 +123,8 @@ const validateDependencies = (mandatoryDependencies, disallowedDependencies) => 
   }
 }
 
-main();
+if (!module.parent) {
+  main();
+}
+
+module.exports = main;

@@ -4,7 +4,6 @@ const {
   logMessage,
   logWarning,
   logErrorAndExit,
-  concatenateArray,
 } = require('./utils');
 
 const validate = (
@@ -13,13 +12,6 @@ const validate = (
   disallowedDependencies,
   failOnInvalid,
 ) => {
-  logMessage(MESSAGES.processingStarted(
-    dependenciesPaths,
-    mandatoryDependencies,
-    disallowedDependencies,
-    failOnInvalid,
-  ));
-
   const {
     mandatoryDependenciesNotIncluded,
     disallowedDependenciesIncluded,
@@ -37,11 +29,16 @@ const validate = (
     disallowedDependenciesIncluded,
   );
 
-  if (!valid) {
-    failOnInvalid ? logErrorAndExit(errorMessage) : logWarning(errorMessage);
+  if (valid) {
+    logMessage(MESSAGES.processingFinished(true));
+  } else {
+    if (failOnInvalid) {
+      logErrorAndExit(errorMessage);
+    } else {
+      logWarning(errorMessage);
+      logMessage(MESSAGES.processingFinished(false));
+    }
   }
-
-  logMessage(MESSAGES.processingFinishedWithSuccess());
 };
 
 const parseDependencies = (dependenciesPaths, mandatoryDependencies, disallowedDependencies) => {
@@ -97,7 +94,7 @@ const validateBundleContent = (mandatoryDependenciesNotIncluded, disallowedDepen
 
   return {
     valid,
-    errorMessage: concatenateArray(errorMessages, '\r\n'),
+    errorMessage: errorMessages.join('\r\n'),
   };
 };
 

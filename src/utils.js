@@ -5,14 +5,13 @@ const logMessage = (message) => console.log(message);
 const logWarning = (warning) => console.warn(`WARNING: ${warning}`);
 
 const logErrorAndExit = (error) => {
-  logMessage(MESSAGES.processingFinishedWithFailure());
   console.error(`ERROR: ${error}`);
+  logMessage(MESSAGES.processingFinished(false));
   process.exit(1);
 };
 
-const deduplicateArray = (array) => array.filter((item, index) => array.indexOf(item) === index);
-
-const concatenateArray = (array, delimiter = ',', initValue = '') => array.reduce((a, b) => `${a}${delimiter}${b}`, initValue);
+const deduplicateArray = (array) =>
+  array.filter((item, index) => array.indexOf(item) === index);
 
 const findDuplicatesInArrays = (array1, array2) => {
   const duplicates = [];
@@ -26,14 +25,14 @@ const findDuplicatesInArrays = (array1, array2) => {
   return duplicates;
 };
 
-const normalizeString = (string) => typeof string === 'string' ? encodeURI(string.replace(/\//g, '\\')) : '';
+const normalizeString = (string) =>
+  typeof string === 'string' ? encodeURI(string.replace(/\//g, '\\')) : '';
 
 module.exports = {
   logMessage,
   logWarning,
   logErrorAndExit,
   deduplicateArray,
-  concatenateArray,
   findDuplicatesInArrays,
   normalizeString,
 };

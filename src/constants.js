@@ -9,20 +9,7 @@ const DEFAULTS_CLI = {
 };
 
 const MESSAGES = {
-  cliStarted: (args) => `Webpack Bundle Content Validator CLI started with args: ${args}`,
-  pluginStarted: (options) => `Webpack Bundle Content Validator Plugin started with options: ${JSON.stringify(options)}`,
-  processingStarted: (
-    dependenciesPaths,
-    mandatoryDependencies,
-    disallowedDependencies,
-    failOnInvalid,
-  ) => `Webpack Bundle Content Validator started with parameters:
-    - dependenciesPaths: ${dependenciesPaths.map(dependency => decodeURI(dependency))},
-    - mandatoryDependencies: ${mandatoryDependencies.map(dependency => decodeURI(dependency))},
-    - disallowedDependencies: ${disallowedDependencies.map(dependency => decodeURI(dependency))},
-    - failOnInvalid: ${failOnInvalid}`,
-  processingFinishedWithSuccess: () => `Webpack Bundle Content Validator finished; result: SUCCESS`,
-  processingFinishedWithFailure: () => `Webpack Bundle Content Validator finished; result: FAILURE`,
+  processingFinished: (success) => `Webpack Bundle Content Validator finished; result: ${success ? 'SUCCESS' : 'FAILURE'}`,
   unrecognizedArg: (arg) => `Unrecognized argument: ${arg}`,
   statsDoesNotExist: (stats) => `File does not exist: ${stats}`,
   statsIsNotValidJson: (stats) => `${stats} file is not valid JSON`,

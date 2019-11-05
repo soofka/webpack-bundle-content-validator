@@ -4,7 +4,6 @@ const {
 } = require('./constants');
 
 const {
-  logMessage,
   logErrorAndExit,
   deduplicateArray,
   findDuplicatesInArrays,
@@ -19,28 +18,38 @@ class WebpackBundleContentValidatorPlugin {
   }
 
   apply(compiler) {
-    compiler.hooks.done.tap('Webpack Bundle Content Validator Plugin', (stats) => {
-      logMessage(MESSAGES.pluginStarted(this.options));
+    compiler.hooks.done.tap(
+      'Webpack Bundle Content Validator Plugin',
+      (stats) => this.process(stats),
+    );
+  }
 
-      const dependenciesPaths = parseStats(stats);
-      const {
-        mandatoryDependencies,
-        disallowedDependencies,
-        failOnInvalid,
-      } = validateOptions({
-        ...DEFAULTS,
-        ...this.options,
-      });
-
-      validate(
-        dependenciesPaths,
-        mandatoryDependencies,
-        disallowedDependencies,
-        failOnInvalid,
-      );
+  process(stats) {
+    const dependenciesPaths = parseStats(stats);
+    const {
+      mandatoryDependencies,
+      disallowedDependencies,
+      failOnInvalid,
+    } = validateOptions({
+      ...DEFAULTS,
+      ...this.options,
     });
+
+    validate(
+      dependenciesPaths,
+      mandatoryDependencies,
+      disallowedDependencies,
+      failOnInvalid,
+    );
   }
 }
+
+const parseStats = (stats) =>
+  stats.compilation && stats.compilation.modules
+    ? stats.compilation.modules
+      .filter(module => module.resource)
+      .map(module => normalizeString(module.resource))
+    : [];
 
 const validateOptions = (options) => {
   if (!Array.isArray(options.mandatoryDependencies)) {
@@ -73,12 +82,5 @@ const validateOptions = (options) => {
     failOnInvalid: !!options.failOnInvalid,
   };
 };
-
-const parseStats = (stats) =>
-  stats.compilation && stats.compilation.modules
-    ? stats.compilation.modules
-      .filter(module => module.resource)
-      .map(module => normalizeString(module.resource))
-    : [];
 
 module.exports = WebpackBundleContentValidatorPlugin;
