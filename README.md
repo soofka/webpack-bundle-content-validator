@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/soofka/webpack-bundle-content-validator.svg?branch=master)](https://travis-ci.org/soofka/webpack-bundle-content-validator)
 [![Coverage Status](https://coveralls.io/repos/soofka/webpack-bundle-content-validator/badge.svg?branch=master)](https://coveralls.io/r/soofka/webpack-bundle-content-validator?branch=master)
+[![Known Vulnerabilities](https://snyk.io/test/github/soofka/webpack-bundle-content-validator/badge.svg?branch=master)](https://snyk.io/test/github/soofka/webpack-bundle-content-validator?branch=master)
 [![NPM version](https://img.shields.io/npm/v/webpack-bundle-content-validator.svg)](https://www.npmjs.com/package/webpack-bundle-content-validator)
 
 # Webpack Bundle Content Validator
@@ -96,5 +97,3 @@ node ./node_modules/webpack-bundle-content-validator/lib/cli.js -s ./stats.json
 
 ## TODO
 * install CLI tool globally and make it run with npx
-* add CI/CD with Travis
-* add https://github.com/conventional-changelog/standard-version or https://github.com/semantic-release/semantic-release
