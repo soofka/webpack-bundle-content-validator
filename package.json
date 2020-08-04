@@ -28,6 +28,6 @@
     "cpy-cli": "^2.0.0",
     "jest": "^24.9.0",
     "rimraf": "^3.0.0",
-    "standard-version": "^7.0.0"
+    "standard-version": "^8.0.1"
   }
 }
