@@ -11,7 +11,7 @@
     "bundle content",
     "bundle content validation"
   ],
-  "author": "Jakub Sowiński <pansoofka@gmail.com> (https://soofka.pl)",
+  "author": "Jakub Sowiński <mail@jakubsowinski.com> (https://jakubsowinski.com)",
   "license": "MIT",
   "files": [
     "lib"
